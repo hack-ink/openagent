@@ -1,13 +1,12 @@
 [package]
 authors     = ["Xavier Lau <x@acg.box>"]
-build       = "build.rs"
-description = "<DESCRIPTION>"
+description = "OpenAI Agent Kit"
 edition     = "2024"
-homepage    = "https://hack.ink/<NAME>"
+homepage    = "https://hack.ink/openagent"
 license     = "GPL-3.0"
-name        = "<NAME>"
+name        = "openagent"
 readme      = "README.md"
-repository  = "https://github.com/hack-ink/<NAME>"
+repository  = "https://github.com/hack-ink/openagent"
 resolver    = "3"
 version     = "0.1.0"
 
@@ -19,16 +18,24 @@ inherits    = "dev"
 inherits = "release"
 lto      = true
 
-[build-dependencies]
+[dev-dependencies]
 # crates.io
-vergen-gitcl = { version = "1.0", features = ["cargo"] }
+dotenvy            = { version = "0.15" }
+tokio              = { version = "1.45", features = ["full"] }
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 
 [dependencies]
 # crates.io
-anyhow             = { version = "1.0" }
-app_dirs2          = { version = "2.5" }
-clap               = { version = "4.5", features = ["derive"] }
-color-eyre         = { version = "0.6" }
-tracing            = { version = "0.1" }
-tracing-appender   = { version = "0.2" }
-tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+futures      = { version = "0.3" }
+paste        = { version = "1.0" }
+pin-project  = { version = "1.1" }
+regex        = { version = "1.11" }
+reqwew       = { version = "0.7", features = ["json", "multipart", "stream"] }
+rmcp         = { version = "0.1", git = "https://github.com/modelcontextprotocol/rust-sdk", features = ["client", "reqwest", "transport-child-process", "transport-sse-client", "transport-streamable-http-client"] }
+serde        = { version = "1.0", features = ["derive"] }
+serde_json   = { version = "1.0" }
+thiserror    = { version = "2.0" }
+tokio        = { version = "1.45" }
+tokio-stream = { version = "0.1" }
+tokio-util   = { version = "0.7" }
+tracing      = { version = "0.1" }
