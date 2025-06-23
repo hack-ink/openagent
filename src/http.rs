@@ -327,7 +327,7 @@ pub struct Auth {
 }
 impl Auth {
 	/// Create a new [`Auth`] instance with the given URI and key.
-	pub fn new() -> Self {
+	pub fn from_env() -> Self {
 		Auth {
 			uri: env::var("OPENAI_BASE_URL").expect("OPENAI_BASE_URL must be set; qed"),
 			key: env::var("OPENAI_API_KEY").expect("OPENAI_API_KEY must be set; qed"),

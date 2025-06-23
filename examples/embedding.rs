@@ -13,12 +13,13 @@ async fn main() -> Result<(), Box<dyn Error>> {
 	dotenvy::dotenv().expect(".env must be loaded; qed");
 
 	let api = Api::new(Auth {
-		uri: "https://aihubmix.com/v1".into(),
+		uri: env::var("OPENAI_BASE_URL").expect("OPENAI_BASE_URL must be set; qed"),
 		key: env::var("OPENAI_API_KEY").expect("OPENAI_API_KEY must be set; qed"),
 	});
 	let req = EmbeddingRequest {
 		input: Either::A("Hello, how are you?".into()),
-		model: Model::TextEmbedding3Large,
+		model: Model::Unknown("Qwen/Qwen3-Embedding-4B".into()),
+		encoding_format: Some(EncodingFormat::Float),
 		..Default::default()
 	};
 	let res = api.create_embedding(req).await;
