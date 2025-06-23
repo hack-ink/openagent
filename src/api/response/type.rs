@@ -103,7 +103,7 @@ impl_serializable_deserializable_enum! {
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct FileSearchToolCallResult {
 	#[serde(skip_serializing_if = "Option::is_none")]
-	pub attributes: Option<Value>,
+	pub attributes: Option<Map>,
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub file_id: Option<String>,
 	#[serde(skip_serializing_if = "Option::is_none")]

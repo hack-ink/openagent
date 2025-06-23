@@ -32,4 +32,6 @@ mod _prelude {
 	pub use serde_json::Value;
 
 	pub(crate) use crate::{api::r#type::*, error::*, http::*, r#type::*, util::*};
+
+	pub(crate) type Map = serde_json::Map<String, Value>;
 }

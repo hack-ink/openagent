@@ -43,7 +43,7 @@ pub struct BatchRequest {
 	pub endpoint: Endpoint,
 	pub input_file_id: String,
 	#[serde(skip_serializing_if = "Option::is_none")]
-	pub metadata: Option<Value>,
+	pub metadata: Option<Map>,
 }
 
 impl_const_str! {
@@ -90,7 +90,7 @@ pub struct BatchObject {
 	pub id: String,
 	pub in_progress_at: Option<u64>,
 	pub input_file_id: String,
-	pub metadata: Option<Value>,
+	pub metadata: Option<Map>,
 	// Can be ignored.
 	// pub object: ConstBatch,
 	pub output_file_id: Option<String>,

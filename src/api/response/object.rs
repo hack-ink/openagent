@@ -17,7 +17,7 @@ pub struct ResponseObject {
 	pub incomplete_details: Option<IncompleteDetails>,
 	pub instructions: Option<String>,
 	pub max_output_tokens: Option<u32>,
-	pub metadata: Value,
+	pub metadata: Map,
 	pub model: Model,
 	// Can be ignored.
 	// pub object: String,

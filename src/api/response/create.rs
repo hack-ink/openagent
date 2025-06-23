@@ -21,7 +21,7 @@ pub struct ResponseRequest {
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub max_output_tokens: Option<u32>,
 	#[serde(skip_serializing_if = "Option::is_none")]
-	pub metadata: Option<Value>,
+	pub metadata: Option<Map>,
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub parallel_tool_calls: Option<bool>,
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -231,7 +231,7 @@ fn serialization_should_work() {
 				queries: vec!["foo".into(), "bar".into()],
 				status: FileSearchToolCallStatus::InProgress,
 				results: Some(vec![FileSearchToolCallResult {
-					attributes: Some(serde_json::json!({"foo":"bar"})),
+					attributes: Some(Map::from_iter([("foo".into(), "bar".into())])),
 					file_id: Some("foo".into()),
 					filename: Some("foo.bar".into()),
 					score: Some(0.95),
@@ -429,7 +429,7 @@ fn serialization_should_work() {
 		]),
 		instructions: Some("foo".into()),
 		max_output_tokens: Some(2048),
-		metadata: Some(serde_json::json!({"foo":"bar"})),
+		metadata: Some(Map::from_iter([("foo".into(), "bar".into())])),
 		parallel_tool_calls: Some(true),
 		previous_response_id: Some("foo".into()),
 		reasoning: Some(Reasoning {
@@ -441,7 +441,7 @@ fn serialization_should_work() {
 		stream: Some(false),
 		temperature: Some(0.7),
 		text: Some(Text {
-			format: Some(Format::JsonSchema {
+			format: Some(ResponseTextFormat::JsonSchema {
 				name: "foo".into(),
 				schema: serde_json::json!({"type":"object","properties":{"foo":{"type":"string"}},"required":["bar"]}),
 				description: Some("foo".into()),

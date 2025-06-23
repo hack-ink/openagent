@@ -57,13 +57,13 @@ pub struct ChatRequest {
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub frequency_penalty: Option<f32>,
 	#[serde(skip_serializing_if = "Option::is_none")]
-	pub logit_bias: Option<bool>,
+	pub logit_bias: Option<Map>,
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub logprobs: Option<bool>,
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub max_completion_tokens: Option<u32>,
 	#[serde(skip_serializing_if = "Option::is_none")]
-	pub metadata: Option<Value>,
+	pub metadata: Option<Map>,
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub n: Option<u8>,
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -91,7 +91,7 @@ pub struct ChatRequest {
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub tool_choice: Option<Value>,
 	#[serde(skip_serializing_if = "Option::is_none")]
-	pub tools: Option<Value>,
+	pub tools: Option<Vec<Value>>,
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub top_logprobs: Option<u8>,
 	#[serde(skip_serializing_if = "Option::is_none")]
