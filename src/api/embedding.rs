@@ -30,7 +30,7 @@ pub struct EmbeddingRequest {
 	pub input: Either<String, Vec<String>>,
 	pub model: Model,
 	#[serde(skip_serializing_if = "Option::is_none")]
-	pub dimensions: Option<u8>,
+	pub dimensions: Option<u32>,
 	pub encoding_format: Option<EncodingFormat>,
 	pub user: Option<String>,
 }
