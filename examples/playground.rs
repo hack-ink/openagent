@@ -15,7 +15,11 @@ fn main() {
 					InputMessageContent { content: "The weather is sunny.".to_string() },
 				)))),
 				Input::Item(InputItem::ResponseMessage(Either::B(OutputMessage::Assistant(
-					OutputMessageContent { id: "1".to_string(), status: "success".to_string(), content: "The weather is sunny.".to_string() },
+					OutputMessageContent {
+						id: "1".to_string(),
+						status: "success".to_string(),
+						content: "The weather is sunny.".to_string(),
+					},
 				)))),
 				Input::Item(InputItem::FileSearchCall),
 			]),
