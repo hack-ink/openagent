@@ -8,7 +8,7 @@ name        = "openagent"
 readme      = "README.md"
 repository  = "https://github.com/hack-ink/openagent"
 resolver    = "3"
-version     = "0.1.5"
+version     = "0.1.6"
 
 [profile.ci-dev]
 incremental = false
