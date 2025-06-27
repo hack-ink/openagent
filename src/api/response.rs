@@ -1,4 +1,4 @@
-//! OpenAI responses API.
+//! OpenAI Responses API
 //!
 //! <https://platform.openai.com/docs/api-reference/responses>
 

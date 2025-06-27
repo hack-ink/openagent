@@ -1,16 +1,19 @@
-//! OpenAI Agent Kit
+//! OpenAI API Agent Kit
 
-// #![deny(clippy::all, missing_docs, unused_crate_dependencies)]
+#![deny(clippy::all, missing_docs)]
+#![cfg_attr(not(test), deny(unused_crate_dependencies))]
 
 // pub mod agent;
 pub mod api;
 pub mod error;
 pub mod http;
-pub mod mcp;
-pub mod tool;
+// pub mod mcp;
+// pub mod tool;
 pub mod r#type;
 
 pub mod prelude {
+	#![allow(missing_docs)]
+
 	pub use crate::{
 		api::{ApiEventHandler, batch::*, chat::*, embedding::*, file::*, response::*, r#type::*},
 		http::*,

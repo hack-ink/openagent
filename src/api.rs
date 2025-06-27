@@ -1,4 +1,4 @@
-//! OpenAI API.
+//! OpenAI API
 
 pub mod batch;
 pub mod chat;

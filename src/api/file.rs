@@ -1,4 +1,4 @@
-//! OpenAI files API.
+//! OpenAI Files API
 //!
 //! <https://platform.openai.com/docs/api-reference/files>
 
@@ -51,6 +51,7 @@ where
 }
 impl<T> ApiFile for T where T: ApiBase {}
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Deserialize)]
 pub struct FileObject {
 	pub bytes: u32,
@@ -65,12 +66,14 @@ pub struct FileObject {
 	pub status: StatusFallback,
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug)]
 pub enum StatusFallback {
 	Completed,
 	Fallback(String),
 }
 impl StatusFallback {
+	#[allow(missing_docs)]
 	pub fn as_str(&self) -> &str {
 		match self {
 			Self::Completed => "completed",
@@ -78,6 +81,7 @@ impl StatusFallback {
 		}
 	}
 
+	#[allow(missing_docs)]
 	pub fn completed(&self) -> bool {
 		matches!(self, Self::Completed)
 	}

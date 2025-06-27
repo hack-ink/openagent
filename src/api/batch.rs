@@ -1,4 +1,4 @@
-//! OpenAI batches API.
+//! OpenAI Batches API
 //!
 //! <https://platform.openai.com/docs/api-reference/batch>
 
@@ -37,6 +37,7 @@ where
 }
 impl<T> ApiBatch for T where T: ApiBase {}
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Default, Serialize)]
 pub struct BatchRequest {
 	pub completion_window: Const24H,
@@ -60,6 +61,7 @@ impl_serializable_deserializable_enum! {
 	}
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Serialize)]
 pub struct BatchInput<T> {
 	pub custom_id: String,
@@ -72,6 +74,7 @@ impl_const_str! {
 	Post => "POST",
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Deserialize)]
 pub struct BatchObject {
 	pub cancelled_at: Option<u64>,
@@ -98,6 +101,7 @@ pub struct BatchObject {
 	pub status: String,
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Deserialize)]
 pub struct BatchError {
 	pub data: Vec<ErrorData>,
@@ -105,6 +109,7 @@ pub struct BatchError {
 	// pub object: ConstList,
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Deserialize)]
 pub struct ErrorData {
 	#[serde(flatten)]
@@ -112,6 +117,7 @@ pub struct ErrorData {
 	pub line: Option<String>,
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Deserialize)]
 pub struct RequestCounts {
 	pub completed: u32,

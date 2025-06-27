@@ -1,4 +1,4 @@
-//! OpenAI chat API.
+//! OpenAI Chat API
 //!
 //! <https://platform.openai.com/docs/api-reference/chat>
 
@@ -48,6 +48,7 @@ where
 }
 impl<T> ApiChat for T where T: ApiBase {}
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Default, Serialize)]
 pub struct ChatRequest {
 	pub messages: Vec<ChatMessage>,
@@ -102,6 +103,7 @@ pub struct ChatRequest {
 	pub web_search_options: Option<Value>,
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Serialize)]
 #[serde(tag = "role", rename_all = "snake_case")]
 pub enum ChatMessage {
@@ -112,6 +114,7 @@ pub enum ChatMessage {
 	Tool(ChatMessageTool),
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Serialize)]
 pub struct ChatMessageCommon<T> {
 	pub content: T,
@@ -126,6 +129,7 @@ where
 	}
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Serialize)]
 pub struct ChatMessageContentText {
 	pub text: String,
@@ -136,6 +140,7 @@ impl_const_str! {
 	Text => "text"
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Serialize)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum ChatMessageContentMultimedia {
@@ -145,6 +150,7 @@ pub enum ChatMessageContentMultimedia {
 	File { file_data: Option<String>, file_id: Option<String>, filename: Option<String> },
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Serialize)]
 pub struct ImageUrl {
 	pub url: String,
@@ -152,6 +158,7 @@ pub struct ImageUrl {
 	pub detail: Option<ImageDetail>,
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Serialize)]
 pub struct InputAudio {
 	pub data: String,
@@ -165,6 +172,7 @@ impl_serializable_enum! {
 	}
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Default, Serialize)]
 pub struct ChatMessageAssistant {
 	#[serde(flatten)]
@@ -176,17 +184,20 @@ pub struct ChatMessageAssistant {
 	pub tool_calls: Option<Vec<ChatToolCall>>,
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Serialize)]
 pub struct ChatMessageContentRefusal {
 	pub refusal: String,
 	pub r#type: String,
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Serialize)]
 pub struct Audio {
 	pub id: String,
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct ChatToolCall {
 	pub function: Function,
@@ -194,18 +205,21 @@ pub struct ChatToolCall {
 	pub r#type: ConstFunction,
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Function {
 	pub arguments: Value,
 	pub name: String,
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Serialize)]
 pub struct ChatMessageTool {
 	pub content: Either<String, Vec<ChatMessageContentText>>,
 	pub tool_call_id: String,
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Serialize)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum ChatResponseFormat {
@@ -214,6 +228,7 @@ pub enum ChatResponseFormat {
 	JsonObject,
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Serialize)]
 pub struct ChatResponseFormatJsonSchema {
 	pub name: String,
@@ -225,11 +240,13 @@ pub struct ChatResponseFormatJsonSchema {
 	pub strict: Option<bool>,
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Serialize)]
 pub struct StreamOptions {
 	pub include_usage: Option<bool>,
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Deserialize)]
 pub struct ChatObject {
 	pub choices: Vec<ChatChoice>,
@@ -243,6 +260,7 @@ pub struct ChatObject {
 	pub usage: ChatUsage,
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Deserialize)]
 pub struct ChatChoice {
 	pub finish_reason: String,
@@ -251,12 +269,14 @@ pub struct ChatChoice {
 	pub message: ChatChoiceMessage,
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Deserialize)]
 pub struct ChatLogprobs {
 	pub content: Option<Vec<Logprobs>>,
 	pub refusal: Option<Vec<Logprobs>>,
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Deserialize)]
 pub struct ChatChoiceMessage {
 	pub content: Option<String>,
@@ -267,6 +287,7 @@ pub struct ChatChoiceMessage {
 	pub tool_calls: Option<Vec<Value>>,
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Deserialize)]
 pub struct ChatUsage {
 	pub completion_tokens: u32,
@@ -276,6 +297,7 @@ pub struct ChatUsage {
 	pub prompt_tokens_details: ChatPromptTokensDetails,
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Deserialize)]
 pub struct ChatCompletionTokensDetails {
 	pub accepted_prediction_tokens: Option<u32>,
@@ -284,12 +306,14 @@ pub struct ChatCompletionTokensDetails {
 	pub rejected_prediction_tokens: Option<u32>,
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Deserialize)]
 pub struct ChatPromptTokensDetails {
 	pub audio_tokens: Option<u32>,
 	pub cached_tokens: u32,
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Deserialize)]
 pub struct ChatChunkObject {
 	pub choices: Vec<ChatChunkChoice>,
@@ -303,6 +327,7 @@ pub struct ChatChunkObject {
 	pub usage: Option<ChatUsage>,
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Deserialize)]
 pub struct ChatChunkChoice {
 	pub delta: Option<ChatChunkChoiceDelta>,
@@ -311,6 +336,7 @@ pub struct ChatChunkChoice {
 	pub logprobs: Option<ChatLogprobs>,
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Deserialize)]
 pub struct ChatChunkChoiceDelta {
 	pub content: Option<String>,
@@ -319,6 +345,7 @@ pub struct ChatChunkChoiceDelta {
 	pub tool_calls: Option<Vec<ChatToolCall>>,
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Deserialize)]
 pub struct ChatToolCallIndexed {
 	pub index: u32,

@@ -1,3 +1,7 @@
+//! OpenAI Embeddings API
+//!
+//! <https://platform.openai.com/docs/api-reference/embeddings>
+
 // self
 use crate::_prelude::*;
 
@@ -22,6 +26,7 @@ where
 }
 impl<T> ApiEmbedding for T where T: ApiBase {}
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Serialize)]
 pub struct EmbeddingRequest {
 	pub input: Either<String, Vec<String>>,
@@ -51,6 +56,7 @@ impl_serializable_enum! {
 	}
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Deserialize)]
 pub struct EmbeddingResponse {
 	// Can be ignored.
@@ -60,6 +66,7 @@ pub struct EmbeddingResponse {
 	pub usage: EmbeddingUsage,
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Deserialize)]
 pub struct EmbeddingObject {
 	pub embedding: Vec<f32>,
@@ -68,6 +75,7 @@ pub struct EmbeddingObject {
 	// pub object: ConstEmbedding,
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Deserialize)]
 pub struct EmbeddingUsage {
 	pub prompt_tokens: u32,

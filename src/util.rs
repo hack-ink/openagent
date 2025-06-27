@@ -7,7 +7,9 @@ macro_rules! impl_const_str {
 	($( $name:tt => $val:expr ),* $(,)?) => {
 		$(
 			paste::paste! {
+				#[allow(missing_docs)]
 				pub type [<Const $name>] = _ConstStr<[<_ $name>]>;
+				#[allow(missing_docs)]
 				#[derive(Clone, Debug, Default)]
 				pub struct [<_ $name>];
 				impl _ConstStrT for [<_ $name>] {
@@ -22,6 +24,7 @@ pub(crate) use impl_const_str;
 macro_rules! _define_enum {
 	// Standard variant without default.
 	($name:ident { $($var:ident),* $(,)? }) => {
+		#[allow(missing_docs)]
 		#[derive(Clone, Debug, PartialEq, Eq)]
 		pub enum $name {
 			$($var),*
@@ -29,6 +32,7 @@ macro_rules! _define_enum {
 	};
 	// Variant with default implementation.
 	($name:ident { $($var:ident),* } with_default $default_var:ident) => {
+		#[allow(missing_docs)]
 		#[derive(Clone, Debug, PartialEq, Eq)]
 		pub enum $name {
 			$($var),*
@@ -145,6 +149,7 @@ pub(crate) use _generate_serializable_deserializable_enum;
 macro_rules! _impl_enum_as_str {
 	($name:ident { $($var:ident => $val:expr),* $(,)? }) => {
 		impl $name {
+			#[allow(missing_docs)]
 			pub const fn as_str(&self) -> &'static str {
 				match self {
 					$(Self::$var => $val),*
@@ -238,10 +243,12 @@ macro_rules! impl_serializable_deserializable_enum {
 }
 pub(crate) use impl_serializable_deserializable_enum;
 
+#[allow(missing_docs)]
 pub trait _ConstStrT {
 	const VAL: &'static str;
 }
 
+#[allow(missing_docs)]
 #[derive(Clone, Debug, Default)]
 pub struct _ConstStr<T>(PhantomData<T>)
 where
