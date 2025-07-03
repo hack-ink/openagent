@@ -37,5 +37,5 @@ tracing     = { version = "0.1" }
 # crates.io
 dotenvy            = { version = "0.15" }
 rmcp               = { version = "0.1.5", git = "https://github.com/modelcontextprotocol/rust-sdk", features = ["client", "reqwest", "transport-child-process", "transport-sse-client", "transport-streamable-http-client"] }
-tokio              = { version = "1.45", features = ["full"] }
+tokio              = { version = "1.46", features = ["full"] }
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
