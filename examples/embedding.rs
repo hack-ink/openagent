@@ -10,8 +10,8 @@ use openagent::prelude::*;
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
 	tracing_subscriber::fmt().with_env_filter(EnvFilter::from_default_env()).init();
-	dotenvy::dotenv().expect(".env must be loaded; qed");
 
+	let _ = dotenvy::dotenv();
 	let api = Api::new(Auth {
 		uri: env::var("OPENAI_BASE_URL").expect("OPENAI_BASE_URL must be set; qed"),
 		key: env::var("OPENAI_API_KEY").expect("OPENAI_API_KEY must be set; qed"),

@@ -10,8 +10,8 @@ use openagent::prelude::*;
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
 	tracing_subscriber::fmt().with_env_filter(EnvFilter::from_default_env()).init();
-	dotenvy::dotenv().expect(".env must be loaded; qed");
 
+	let _ = dotenvy::dotenv();
 	let api = Api::new(Auth {
 		uri: "https://api.openai.com/v1".into(),
 		key: env::var("OPENAI_API_KEY").expect("OPENAI_API_KEY must be set; qed"),

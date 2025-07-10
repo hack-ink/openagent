@@ -256,7 +256,7 @@ pub struct ChatObject {
 	// Can be ignored.
 	// pub object:
 	pub service_tier: Option<ServiceTier>,
-	pub system_fingerprint: String,
+	pub system_fingerprint: Option<String>,
 	pub usage: ChatUsage,
 }
 
