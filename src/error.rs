@@ -16,9 +16,7 @@ pub enum Error {
 	#[error(transparent)]
 	Codec(#[from] tokio_util::codec::LinesCodecError),
 	#[error(transparent)]
-	Reqwew(#[from] reqwew::error::Error),
-	#[error(transparent)]
-	Reqwest(#[from] reqwew::reqwest::Error),
+	Reqwest(#[from] reqwest::Error),
 	#[error(transparent)]
 	SerdeJson(#[from] serde_json::Error),
 

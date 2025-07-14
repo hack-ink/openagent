@@ -1,7 +1,10 @@
 //! OpenAI API common types.
 
 // std
-use std::error::Error as ErrorT;
+use std::{
+	error::Error as ErrorT,
+	fmt::{Debug, Formatter, Result as FmtResult},
+};
 // self
 use crate::_prelude::*;
 
@@ -103,21 +106,14 @@ pub struct ApiErrorWrapper {
 #[derive(Clone, Debug, Deserialize)]
 pub struct ApiError {
 	/// The specific type of error encountered.
-	pub r#type: String,
+	pub r#type: Option<String>,
 	/// Common error fields shared across all error types.
 	#[serde(flatten)]
 	pub base: ErrorBase,
 }
 impl Display for ApiError {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		write!(
-			f,
-			"{}: {} (code: {}, param: {})",
-			self.r#type,
-			self.base.message,
-			self.base.code.as_deref().unwrap_or("N/A"),
-			self.base.param.as_deref().unwrap_or("N/A")
-		)
+	fn fmt(&self, f: &mut Formatter) -> FmtResult {
+		Debug::fmt(self, f)
 	}
 }
 impl ErrorT for ApiError {}
@@ -128,7 +124,7 @@ pub struct ErrorBase {
 	/// Human-readable description of the error.
 	pub message: String,
 	/// Optional error code identifying the specific error type.
-	pub code: Option<String>,
+	pub code: Option<u32>,
 	/// Optional parameter name that caused the error.
 	pub param: Option<String>,
 }

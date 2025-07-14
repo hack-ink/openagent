@@ -12,12 +12,9 @@ use std::{
 };
 // crates.io
 use futures::{Stream, TryStreamExt};
-use reqwew::{
-	Http,
-	reqwest::{
-		Body, Client as ReqwestClient, Method,
-		multipart::{Form, Part},
-	},
+use reqwest::{
+	Body, Client,
+	multipart::{Form, Part},
 };
 use tokio_util::{
 	bytes::Bytes,
@@ -166,16 +163,14 @@ impl Default for Reconnect {
 #[derive(Clone, Debug)]
 /// Concrete API client that talks to the remote service using `reqwest`.
 pub struct Api {
-	http: ReqwestClient,
+	http: Client,
 	auth: Auth,
 }
 impl Api {
-	/// Constructs a new `Api` client with the supplied `auth` settings.
+	/// Constructs a new [`Api`] client with the supplied `auth` settings.
 	pub fn new(auth: Auth) -> Self {
-		let http = ReqwestClient::builder()
-			.user_agent("openagent")
-			.build()
-			.expect("build must succeed; qed");
+		let http =
+			Client::builder().user_agent("openagent").build().expect("build must succeed; qed");
 
 		Self { http, auth }
 	}
@@ -186,56 +181,41 @@ impl ApiBase for Api {
 	}
 
 	async fn get(&self, endpoint: &str) -> Result<String> {
-		let resp = self
+		Ok(self
 			.http
-			.request_with_retries(
-				self.http
-					.request(Method::GET, format!("{}{endpoint}", self.base_uri()))
-					.bearer_auth(&self.auth.key)
-					.build()?,
-				3,
-				200,
-			)
-			.await?;
-		let text = resp.text().await?;
-
-		Ok(text)
+			.get(format!("{}{endpoint}", self.base_uri()))
+			.bearer_auth(&self.auth.key)
+			.send()
+			.await?
+			.text()
+			.await?)
 	}
 
 	async fn post_multipart(&self, endpoint: &str, multipart: Multipart) -> Result<String> {
-		let resp = <ReqwestClient as Http>::request(
-			&self.http,
-			self.http
-				.request(Method::POST, format!("{}{endpoint}", self.base_uri()))
-				.bearer_auth(&self.auth.key)
-				.multipart(multipart.into())
-				.build()?,
-		)
-		.await?;
-		let text = resp.text().await?;
-
-		Ok(text)
+		Ok(self
+			.http
+			.post(format!("{}{endpoint}", self.base_uri()))
+			.bearer_auth(&self.auth.key)
+			.multipart(multipart.into())
+			.send()
+			.await?
+			.text()
+			.await?)
 	}
 
 	async fn post_json<S>(&self, endpoint: &str, body: S) -> Result<String>
 	where
 		S: Send + Serialize,
 	{
-		let resp = self
+		Ok(self
 			.http
-			.request_with_retries(
-				self.http
-					.request(Method::POST, format!("{}{endpoint}", self.base_uri()))
-					.bearer_auth(&self.auth.key)
-					.json(&body)
-					.build()?,
-				3,
-				200,
-			)
-			.await?;
-		let text = resp.text().await?;
-
-		Ok(text)
+			.post(format!("{}{endpoint}", self.base_uri()))
+			.bearer_auth(&self.auth.key)
+			.json(&body)
+			.send()
+			.await?
+			.text()
+			.await?)
 	}
 
 	async fn sse<S, H>(
@@ -248,16 +228,14 @@ impl ApiBase for Api {
 		S: Send + Serialize,
 		H: 'static + EventHandler,
 	{
-		let req = self
+		let stream = self
 			.http
-			.request(Method::POST, format!("{}{endpoint}", self.base_uri()))
+			.post(format!("{}{endpoint}", self.base_uri()))
 			.bearer_auth(&self.auth.key)
 			.header("Accept", "text/event-stream")
 			.header("Cache-Control", "no-cache")
-			.json(&body);
-		let stream = self
-			.http
-			.request_with_retries(req.build()?, 3, 200)
+			.json(&body)
+			.send()
 			.await?
 			.bytes_stream()
 			.map_err(IoError::other);
@@ -286,21 +264,18 @@ impl ApiBase for Api {
 	{
 		let mut req = self
 			.http
-			.request(Method::POST, format!("{}{endpoint}", self.base_uri()))
+			.post(format!("{}{endpoint}", self.base_uri()))
 			.bearer_auth(&self.auth.key)
 			.header("Accept", "text/event-stream")
 			.header("Cache-Control", "no-cache")
 			.json(&body);
+
 		// Add Last-Event-ID header for resumption.
 		if let Some(event_id) = last_event_id {
 			req = req.header("Last-Event-ID", event_id);
 		}
-		let stream = self
-			.http
-			.request_with_retries(req.build()?, 3, 200)
-			.await?
-			.bytes_stream()
-			.map_err(IoError::other);
+
+		let stream = req.send().await?.bytes_stream().map_err(IoError::other);
 		let reader = StreamReader::new(Box::pin(stream) as _);
 		let stream = FramedRead::new(reader, LinesCodec::new());
 
