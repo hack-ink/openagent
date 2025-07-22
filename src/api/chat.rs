@@ -293,8 +293,8 @@ pub struct ChatUsage {
 	pub completion_tokens: u32,
 	pub prompt_tokens: u32,
 	pub total_tokens: u32,
-	pub completion_tokens_details: ChatCompletionTokensDetails,
-	pub prompt_tokens_details: ChatPromptTokensDetails,
+	pub completion_tokens_details: Option<ChatCompletionTokensDetails>,
+	pub prompt_tokens_details: Option<ChatPromptTokensDetails>,
 }
 
 #[allow(missing_docs)]
